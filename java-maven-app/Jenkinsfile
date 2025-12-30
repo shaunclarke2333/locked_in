@@ -1,4 +1,7 @@
+def gv
+
 piepline {
+
     agent any
 
     stages {
