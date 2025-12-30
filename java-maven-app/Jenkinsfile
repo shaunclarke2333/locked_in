@@ -11,7 +11,7 @@ pipeline {
         NEW_VERSION = '1.2.0'
      }
     */
-    
+
     // Defining an environment variable
     environment {
         NEW_VERSION = '1.2.0'
@@ -91,6 +91,16 @@ pipeline {
             Only execute if the job failed
         }
         */
+
+         success {
+            // Only execute when the job is successful
+            echo "Job completed successfully"
+        }
+
+        failure {
+            // Only execute if the job failed
+            echo "Job failed"
+        }
 
     }
 }
