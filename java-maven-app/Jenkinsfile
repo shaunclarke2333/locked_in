@@ -22,11 +22,11 @@ pipeline {
         stage("build") {
 
             //expression for running build stage if branch name is dev and code changes were made
-            when {
-                expression {
-                    BRANCH_NAME == 'dev' && CODE_CHANGES ==true
-                }
-            }
+            // when {
+            //     expression {
+            //         BRANCH_NAME == 'dev' && CODE_CHANGES ==true
+            //     }
+            // }
             
             steps {
                 echo "Starting build stage: Building docker image"
@@ -54,11 +54,11 @@ pipeline {
             */
 
             //expression for running test stage if branch name is dev or master
-            when {
-                expression {
-                    BRANCH_NAME == 'dev' || BRANCH_NAME == 'master'
-                }
-            }
+            // when {
+            //     expression {
+            //         BRANCH_NAME == 'dev' || BRANCH_NAME == 'master'
+            //     }
+            // }
 
             steps {
                 echo "Testing the docker image"
