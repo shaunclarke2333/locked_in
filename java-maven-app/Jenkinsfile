@@ -1,6 +1,4 @@
-def gv
-
-piepline {
+pipeline {
 
     agent any
 
