@@ -2,15 +2,63 @@ pipeline {
 
     agent any
 
+    /*
+    To define environmental variables in your jenkins file.
+    You must do it at the beginning of the pipeline block, this allows it to be available for all stages in that pipeline.
+     you define environment variablkes like this
+
+     environment {
+        NEW_VERSION = '1.2.0'
+     }
+    */
+    
+    // Defining an environment variable
+    environment {
+        NEW_VERSION = '1.2.0'
+     }
+
     stages {
         
         stage("build") {
+
+            //expression for running build stage if branch name is dev and code changes were made
+            when {
+                expression {
+                    BRANCH_NAME == 'dev' && CODE_CHANGES ==true
+                }
+            }
             
             steps {
                 echo "Starting build stage: Building docker image"
             }
         }
         stage("test") {
+             /*
+            To define expressions or conditionals for each stage.
+            You would use "when" expressions and  add it to the beginning of the stage block.
+            Let's say you only wanted to run tests on dev or prod branch.
+            Or if you want to run build stage if it is dev branch and and code changes were made.
+            It would look like this.
+            expression for running test stage if branch name is dev or master
+            when {
+                expression {
+                    BRANCH_NAME == 'dev' || BRANCH_NAME == 'master'
+                }
+            }
+            expression for running build stage if branch name is dev and code changes were made
+            when {
+                expression {
+                    BRANCH_NAME == 'dev' && CODE_CHANGES ==true
+                }
+            }
+            */
+
+            //expression for running test stage if branch name is dev or master
+            when {
+                expression {
+                    BRANCH_NAME == 'dev' || BRANCH_NAME == 'master'
+                }
+            }
 
             steps {
                 echo "Testing the docker image"
@@ -19,8 +67,30 @@ pipeline {
         stage("deploy") {
 
             steps {
-                echo "Deployign the Docker image"
+                echo "Deployign the Docker image:${NEW_VERSION}"
             }
         }
+    }
+
+    post {
+
+        /*
+        In this stage/block you can add logic that should run after all stages are completed
+        For example the post section is like the finally block in a try catch finally.
+        You can have the following conditions in post that will trigger what you want to execute.
+
+        always {
+            always execute whatever is in here regardless of the job outcome
+        }
+
+        success {
+            Only execute when the job is successful
+        }
+
+        failure {
+            Only execute if the job failed
+        }
+        */
+
     }
 }
