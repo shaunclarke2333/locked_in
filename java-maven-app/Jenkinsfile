@@ -123,16 +123,12 @@ pipeline {
 
          success {
             // Only execute when the job is successful
-            script {
-                    gv.appSuccess()
-                }
+            echo "Job completed successfully"
         }
 
         failure {
             // Only execute if the job failed
-            script {
-                    gv.appFail()
-                }
+            echo "Job failed"
         }
 
     }
