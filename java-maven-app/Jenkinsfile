@@ -8,7 +8,7 @@ pipeline {
         stage("build jar") {
             steps {
                 // specifying the directory to run commands 
-                dir(java-maven-app) {
+                dir('java-maven-app') {
                     echo "Building the app"
                     sh 'cd '
                     sh 'mvn package'
@@ -18,7 +18,7 @@ pipeline {
         }
          stage("build image") {
             steps {
-                dir(java-maven-app) {
+                dir('java-maven-app') {
                     echo "Building the docker image"
                     withCredentials([usernamePassword(credentialsId: 'docker', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
                         sh 'docker build -t 192.168.0.104:8083/demo-app:jma-1.3 .'
