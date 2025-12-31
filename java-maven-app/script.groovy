@@ -17,3 +17,5 @@ def appSuccess() {
 def appFail() {
     echo "Job failed"
 }
+
+return this
