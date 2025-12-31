@@ -53,7 +53,7 @@ pipeline {
             
             steps {
                 script {
-                    gv.appBuild
+                    gv.appBuild()
                 }
             }
         }
@@ -87,7 +87,7 @@ pipeline {
 
             steps {
                 script {
-                    gv.appTest
+                    gv.appTest()
                 }
             }
         }
@@ -95,7 +95,7 @@ pipeline {
 
             steps {
                 script {
-                    gv.appDeploy
+                    gv.appDeploy()
                 }
             }
         }
@@ -123,12 +123,16 @@ pipeline {
 
          success {
             // Only execute when the job is successful
-            echo "Job completed successfully"
+            script {
+                    gv.appSuccess()
+                }
         }
 
         failure {
             // Only execute if the job failed
-            echo "Job failed"
+            script {
+                    gv.appFail()
+                }
         }
 
     }
