@@ -1,19 +1,19 @@
-def buildJar() {
-    echo 'building the application...'
-    sh 'mvn package'
+def appBuild() {
+    echo "Starting build stage: Building docker image"
 }
 
-def buildImage() {
-    echo "building the docker image..."
-    withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
-        sh 'docker build -t nanatwn/demo-app:jma-2.0 .'
-        sh 'echo $PASS | docker login -u $USER --password-stdin'
-        sh 'docker push nanatwn/demo-app:jma-2.0'
-    }
+def appTest() {
+    echo "Testing the docker image"
 }
 
-def deployApp() {
-    echo 'deploying the application...'
+def appDeploy() {
+    echo "Deployign the Docker image:${NEW_VERSION}"
 }
 
-return this
+def appSuccess() {
+    echo "Job completed successfully"
+}
+
+def appFail() {
+    echo "Job failed"
+}

@@ -1,3 +1,6 @@
+// Defining variable globally so it is availbale to the entire pipeline.
+def gv
+
 pipeline {
 
     agent any
@@ -9,7 +12,20 @@ pipeline {
 
      environment {
         NEW_VERSION = '1.2.0'
+
+        //environment variable for credentials. make sure the "Credentials binding plugin" that supports it is installed
+        The credentials function takes the id of the credentials that were already created in the GUI
+        SERVER_CREDENTIALS = credentials('credential-id')
      }
+
+     We can also define environment variable in a sepcific stage using:
+     withCredentials([
+        usernamePassword(credentials: 'credential-id foes here', usernameVariable: User, passwordVariable: PASSWORD)
+     ]) {
+        // passing the username and pasword tot eh script
+        sh "some_scrit_here ${USER} ${PW}"
+     }
+
     */
 
     // Defining an environment variable
@@ -18,7 +34,14 @@ pipeline {
      }
 
     stages {
-        
+        // This stage imports a groovy script and make all the functions defined in them available
+        stage("init") {
+            steps {
+                script {
+                    gv = load "script.groovy"
+                }
+            }
+        }
         stage("build") {
 
             //expression for running build stage if branch name is dev and code changes were made
@@ -29,7 +52,9 @@ pipeline {
             // }
             
             steps {
-                echo "Starting build stage: Building docker image"
+                script {
+                    gv.appBuild
+                }
             }
         }
         stage("test") {
@@ -61,13 +86,17 @@ pipeline {
             // }
 
             steps {
-                echo "Testing the docker image"
+                script {
+                    gv.appTest
+                }
             }
         }
         stage("deploy") {
 
             steps {
-                echo "Deployign the Docker image:${NEW_VERSION}"
+                script {
+                    gv.appDeploy
+                }
             }
         }
     }
@@ -94,12 +123,16 @@ pipeline {
 
          success {
             // Only execute when the job is successful
-            echo "Job completed successfully"
+            script {
+                gv.appSuccess
+            }
         }
 
         failure {
             // Only execute if the job failed
-            echo "Job failed"
+            script {
+                gv.appFail
+            }
         }
 
     }
