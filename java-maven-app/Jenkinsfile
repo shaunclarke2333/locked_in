@@ -10,7 +10,6 @@ pipeline {
                 // specifying the directory to run commands 
                 dir('java-maven-app') {
                     echo "Building the app"
-                    sh 'cd '
                     sh 'mvn package'
                 }
                 
