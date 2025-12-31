@@ -16,23 +16,22 @@ pipeline {
         }
         stage("build jar") {
             steps {
-                // specifying the directory to run commands 
-                dir('java-maven-app') {
-                   script {
-                        gv.buildJar()
-                   }
+                
+                script {
+                    gv.buildJar()
                 }
+              
                 
             }
         }
          stage("build image") {
             steps {
-                dir('java-maven-app') {
-                    script {
-                        gv.buildImage()
-                   }
-                    
+               
+                script {
+                    gv.buildImage()
                 }
+                    
+                
             }
         }
         stage("deploy") {
