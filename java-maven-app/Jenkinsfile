@@ -1,4 +1,4 @@
-@Library('jenkins-shared-library')
+@Library('jenkins-shared-library')_
 
 def gv
 
@@ -11,21 +11,21 @@ pipeline {
         stage("init") {
             steps {
                 script {
-                    gv = load "script.groovy"
+                    gv = load "java-maven-app/script.groovy"
                 }
             }
         }
         stage("build jar") {
             steps {
-                script {
-                    buildjar()
+                dir('java-maven-app') {
+                    buildJar()
                 }
             }
         }
 
         stage("build image") {
             steps {
-                script {
+                dir('java-maven-app') {
                     buildImage()
                 }
             }
