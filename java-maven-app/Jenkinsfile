@@ -26,7 +26,7 @@ pipeline {
         stage("build image") {
             steps {
                 dir('java-maven-app') {
-                    buildimage()
+                    buildImage()
                 }
             }
         }
