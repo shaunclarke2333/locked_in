@@ -7,6 +7,7 @@ pipeline {
     tools {
         maven 'maven-3.9.12'
     }
+
     stages {
         stage("init") {
             steps {
@@ -34,7 +35,7 @@ pipeline {
         stage("deploy") {
             steps {
                 script {
-                    gv.deployApp()
+                    gv.deployImage()
                 }
             }
         }               
