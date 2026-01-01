@@ -8,3 +8,4 @@ def call() {
         sh 'docker push nanatwn/demo-app:jma-2.0'
     }
 }
+
